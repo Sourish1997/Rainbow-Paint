@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.params=g\ x\ y
+comment0.target=void\ paintComponent(java.awt.Graphics,\ int,\ int)
+comment1.params=
+comment1.target=java.awt.Color\ colors()
+numComments=2
