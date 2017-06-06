@@ -1,3 +1,5 @@
+package Brushes;
+
 import java.awt.*;
 import java.awt.geom.*;
 public class Eraser implements RainbowPaint 

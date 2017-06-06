@@ -1,7 +1,12 @@
+package Main;
+
+import Brushes.ColorCircle;
+import Brushes.Eraser;
+import Brushes.RainbowPaint;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.awt.geom.*;
 import java.util.*;
 import java.io.*;
 public class Main extends JPanel implements MouseListener, ActionListener 
@@ -9,7 +14,7 @@ public class Main extends JPanel implements MouseListener, ActionListener
     int x = 0, y = 0, counter = 0;
     static JFrame fr = new JFrame("Rainbow Paint");
     javax.swing.Timer timer = new javax.swing.Timer(50, this);
-    ArrayList < RainbowPaint > Glitters = new ArrayList < RainbowPaint > ();
+    ArrayList <RainbowPaint> Glitters = new ArrayList <RainbowPaint> ();
     ArrayList < Integer > xCoOrds = new ArrayList < Integer > ();
     ArrayList < Integer > yCoOrds = new ArrayList < Integer > ();
     ArrayList < Integer > ErPatterns = new ArrayList < Integer > ();
@@ -110,8 +115,10 @@ public class Main extends JPanel implements MouseListener, ActionListener
                 String str2 = "", str3 = "", str4 = "";
                 try 
                 {
-                    BufferedReader reader = new BufferedReader(new FileReader("names.txt"));
+                    BufferedReader reader = new BufferedReader(new FileReader("data/names.txt"));
                     String names = reader.readLine();
+                    if(names == null)
+                        names = "";
                     reader.close();
                     String name = "";
                     for (int a = 0; a < names.length(); a++) 
@@ -140,25 +147,25 @@ public class Main extends JPanel implements MouseListener, ActionListener
                     } 
                     else 
                     {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter("names.txt"));
+                        BufferedWriter writer = new BufferedWriter(new FileWriter("data/names.txt"));
                         writer.write(names + input + " ");
                         writer.close();
                     }
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(input + "x.txt"));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("data/" + input + "x.txt"));
                     for (Integer obj: xCoOrds) 
                     {
                         str2 += obj + " ";
                     }
                     writer.write(str2);
                     writer.close();
-                    writer = new BufferedWriter(new FileWriter(input + "y.txt"));
+                    writer = new BufferedWriter(new FileWriter("data/" + input + "y.txt"));
                     for (Integer obj: yCoOrds) 
                     {
                         str3 += obj + " ";
                     }
                     writer.write(str3);
                     writer.close();
-                    writer = new BufferedWriter(new FileWriter(input + "ar.txt"));
+                    writer = new BufferedWriter(new FileWriter("data/" + input + "ar.txt"));
                     for (Integer obj: ErPatterns) 
                     {
                         str4 += obj + " ";
@@ -169,6 +176,7 @@ public class Main extends JPanel implements MouseListener, ActionListener
                 } 
                 catch (Exception ex) 
                 {
+                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "The file could not be successfully saved", "", JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -177,7 +185,7 @@ public class Main extends JPanel implements MouseListener, ActionListener
         {
             try 
             {
-                BufferedReader reader = new BufferedReader(new FileReader("names.txt"));
+                BufferedReader reader = new BufferedReader(new FileReader("data/names.txt"));
                 String options = reader.readLine();
                 reader.close();
                 int count = 0;
@@ -207,10 +215,10 @@ public class Main extends JPanel implements MouseListener, ActionListener
                 String input = (String)(JOptionPane.showInputDialog(null, "Choose", "Load", JOptionPane.INFORMATION_MESSAGE, null, opList, opList[0]));
                 if (input != null) 
                 {
-                    reader = new BufferedReader(new FileReader(input + "x.txt"));
+                    reader = new BufferedReader(new FileReader("data/" + input + "x.txt"));
                     String savedX = reader.readLine();
                     reader.close();
-                    reader = new BufferedReader(new FileReader(input + "y.txt"));
+                    reader = new BufferedReader(new FileReader("data/" + input + "y.txt"));
                     String savedY = reader.readLine();
                     reader.close();
                     xCoOrds.clear();
@@ -240,9 +248,9 @@ public class Main extends JPanel implements MouseListener, ActionListener
                             coOrd += savedY.charAt(a);
                         }
                     }
-                    Glitters = new ArrayList < RainbowPaint > ();
+                    Glitters = new ArrayList <RainbowPaint> ();
                     ErPatterns.clear();
-                    reader = new BufferedReader(new FileReader(input + "ar.txt"));
+                    reader = new BufferedReader(new FileReader("data/" + input + "ar.txt"));
                     String ErNos = reader.readLine();
                     reader.close();
                     String ErNo = "";
@@ -284,7 +292,7 @@ public class Main extends JPanel implements MouseListener, ActionListener
         } 
         else if (e.getSource() == neu) 
         {
-            Glitters = new ArrayList < RainbowPaint > ();
+            Glitters = new ArrayList <RainbowPaint> ();
             xCoOrds.clear();
             yCoOrds.clear();
             ErPatterns.clear();
@@ -302,7 +310,7 @@ public class Main extends JPanel implements MouseListener, ActionListener
         {
             try 
             {
-                BufferedReader reader = new BufferedReader(new FileReader("names.txt"));
+                BufferedReader reader = new BufferedReader(new FileReader("data/names.txt"));
                 String names = reader.readLine();
                 reader.close();
                 int count = 0;
@@ -333,12 +341,12 @@ public class Main extends JPanel implements MouseListener, ActionListener
                 if (input != null) 
                 {
                     String modNames = names.replace((input + " "), "");
-                    BufferedWriter writer = new BufferedWriter(new FileWriter("names.txt"));
+                    BufferedWriter writer = new BufferedWriter(new FileWriter("data/names.txt"));
                     writer.write(modNames);
                     writer.close();
-                    new File(input + "x.txt").delete();
-                    new File(input + "y.txt").delete();
-                    new File(input + "ar.txt").delete();
+                    new File("data/" + input + "x.txt").delete();
+                    new File("data/" + input + "y.txt").delete();
+                    new File("data/" + input + "ar.txt").delete();
                     JOptionPane.showMessageDialog(null, "File has been successfully deleted");
                 }
             } 

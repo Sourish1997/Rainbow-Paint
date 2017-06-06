@@ -1,3 +1,5 @@
+package Brushes;
+
 import java.awt.*;
 public interface RainbowPaint 
 {
